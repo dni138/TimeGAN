@@ -74,7 +74,7 @@ def discriminative_score_metrics (ori_data, generated_data):
       - d_vars: discriminator variables
     """
     with tf.variable_scope("discriminator", reuse = tf.AUTO_REUSE) as vs:
-      d_cell = tf.nn.rnn_cell.GRUCell(num_units=hidden_dim, activation=tf.nn.tanh, name = 'd_cell')
+      d_cell = tf.nn.rnn_cell.GRUCell(num_units=hidden_dim, activation=tf.nn.tanh)
       d_outputs, d_last_states = tf.nn.dynamic_rnn(d_cell, x, dtype=tf.float32, sequence_length = t)
       y_hat_logit = tf.contrib.layers.fully_connected(d_last_states, 1, activation_fn=None) 
       y_hat = tf.nn.sigmoid(y_hat_logit)
