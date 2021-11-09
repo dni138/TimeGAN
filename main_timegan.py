@@ -45,7 +45,7 @@ def main (args):
   """Main function for timeGAN experiments.
   
   Args:
-    - data_name: sine, stock, or energy
+    - data_path: path to the data
     - seq_len: sequence length
     - Network parameters (should be optimized for different datasets)
       - module: gru, lstm, or lstmLN
@@ -61,14 +61,9 @@ def main (args):
     - metric_results: discriminative and predictive scores
   """
   ## Data loading
-  if args.data_name in ['stock', 'energy']:
-    ori_data = real_data_loading(args.data_name, args.seq_len)
-  elif args.data_name == 'sine':
-    # Set number of samples and its dimensions
-    no, dim = 10000, 5
-    ori_data = sine_data_generation(no, args.seq_len, dim)
+  ori_data = real_data_loading(args.data_path, args.seq_len)
     
-  print(args.data_name + ' dataset is ready.')
+  print(args.data_path + ' dataset is ready.')
     
   ## Synthetic data generation by TimeGAN
   # Set newtork parameters
@@ -117,10 +112,9 @@ if __name__ == '__main__':
   # Inputs for the main function
   parser = argparse.ArgumentParser()
   parser.add_argument(
-      '--data_name',
-      choices=['sine','stock','energy'],
-      default='stock',
-      type=str)
+      '--data_path',
+      type=str,
+      help='provide the full path to the data you want to model.')
   parser.add_argument(
       '--seq_len',
       help='sequence length',
